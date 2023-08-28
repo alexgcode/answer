@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Smartwyre.DeveloperTest.Data;
 using Smartwyre.DeveloperTest.Helpers;
 using Smartwyre.DeveloperTest.Services;
@@ -15,10 +16,19 @@ public class PaymentServiceTests
     {
         RebateDataStore rebateDataStore = new RebateDataStore();
         ProductDataStore productDataStore = new ProductDataStore();
+        using var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder
+                .AddFilter("Microsoft", LogLevel.Warning)
+                .AddFilter("System", LogLevel.Warning)
+                .AddFilter("LoggingConsoleApp.Program", LogLevel.Debug)
+                .AddConsole();
+        });
+        var logger = loggerFactory.CreateLogger<RebateService>();
 
 
         // create the service
-        var service = new RebateService(rebateDataStore, productDataStore);
+        var service = new RebateService(rebateDataStore, productDataStore, logger);
 
 
         //create the input
@@ -43,10 +53,19 @@ public class PaymentServiceTests
     {
         RebateDataStore rebateDataStore = new RebateDataStore();
         ProductDataStore productDataStore = new ProductDataStore();
+        using var loggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder
+                .AddFilter("Microsoft", LogLevel.Warning)
+                .AddFilter("System", LogLevel.Warning)
+                .AddFilter("LoggingConsoleApp.Program", LogLevel.Debug)
+                .AddConsole();
+        });
+        var logger = loggerFactory.CreateLogger<RebateService>();
 
 
         // create the service
-        var service = new RebateService(rebateDataStore, productDataStore);
+        var service = new RebateService(rebateDataStore, productDataStore, logger);
 
 
         //create the input
